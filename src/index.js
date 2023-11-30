@@ -26,7 +26,7 @@ mongoose.connect(process.env.MONGODB_URI, {
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  context: ({ req }) => ({ user: auth.authenticate(req) }),
+  context: ({ req }) => ({ user: auth.verifyToken(req) }),
 });
 
 // Start the Apollo Server before applying middleware
