@@ -5,11 +5,20 @@ const { ApolloServer } = require('apollo-server-express');
 const typeDefs = require('./graphql/schema');
 const resolvers = require('./graphql/resolvers');
 const auth = require('./auth');
+const cors = require('cors');
+
 
 // Load environment variables from .env
 require('dotenv').config();
 
 const app = express();
+app.use(cors());
+
+app.use((req, res, next) => {
+  console.log(`Incoming request: ${req.method} ${req.originalUrl}`);
+  next();
+});
+
 
 console.log('MONGODB_URI:', process.env.MONGODB_URI);
 
@@ -27,6 +36,8 @@ const server = new ApolloServer({
   typeDefs,
   resolvers,
   context: ({ req }) => ({ user: auth.verifyToken(req) }),
+  debug: true,
+
 });
 
 // Start the Apollo Server before applying middleware
@@ -42,7 +53,7 @@ async function startServer() {
   });
 
   // Start the server
-  const PORT = process.env.PORT || 3000;
+  const PORT = process.env.PORT || 4000;
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
     console.log(`GraphQL endpoint: http://localhost:${PORT}${server.graphqlPath}`);
