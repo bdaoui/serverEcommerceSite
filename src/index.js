@@ -35,7 +35,7 @@ mongoose.connect(process.env.MONGODB_URI, {
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  context: ({ req }) => ({ user: auth.verifyToken(req) }),
+  //context: ({ req }) => ({ user: auth.verifyToken(req) }),
   debug: true,
 
 });
