@@ -14,6 +14,7 @@ require('dotenv').config();
 const app = express();
 app.use(cors());
 
+// Console Log the Incoming Request from The Front
 app.use((req, res, next) => {
   console.log(`Incoming request: ${req.method} ${req.originalUrl}`);
   next();
