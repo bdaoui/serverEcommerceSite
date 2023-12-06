@@ -38,7 +38,7 @@ const resolvers = {
     
     createUser: async (parent, args) => {
       try{
-        const newUser = new User(arg);
+        const newUser = new User(arg.input);
         const savedUser = await newUser.save();
         return savedUser;
 
