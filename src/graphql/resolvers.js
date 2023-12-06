@@ -1,7 +1,9 @@
 // import schema 
 const { typeDefs } = require('./schema'); 
 const Product = require('../models/product'); // Adjust the path accordingly
-const User = require('../models/user.js')
+const User = require('../models/user.js');
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
 // resolvers.js
 const resolvers = {
@@ -37,6 +39,16 @@ const resolvers = {
     },
     
     createUser: async (parent, args) => {
+      const argsToHash = args;
+      
+      await bcrypt.hash(args.input.password, saltRounds, (err, hash) =>{
+        if(err){
+          console.error('Error hashing password: ', err);
+        } else{
+          argsToHash.input.password = hash;
+        }
+      });
+
       try{
         const newUser = new User(args.input);
         const savedUser = await newUser.save();
