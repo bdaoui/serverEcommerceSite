@@ -1,7 +1,7 @@
 // import schema 
 const { typeDefs } = require('./schema'); 
 const Product = require('../models/product'); // Adjust the path accordingly
-const User = requie('../models/user.js')
+const User = require('../models/user.js')
 
 // resolvers.js
 const resolvers = {
@@ -38,7 +38,7 @@ const resolvers = {
     
     createUser: async (parent, args) => {
       try{
-        const newUser = new User(arg.input);
+        const newUser = new User(args.input);
         const savedUser = await newUser.save();
         return savedUser;
 

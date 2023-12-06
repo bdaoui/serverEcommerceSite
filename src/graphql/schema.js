@@ -16,6 +16,12 @@ const typeDefs = gql`
     #editFromCart()
   }
 
+
+  type CartItem {
+    productId: ID!
+    quantity: Int!
+  }
+
   type User {
     id: ID!
     username: String!
@@ -29,11 +35,6 @@ const typeDefs = gql`
     name: String!
     price: Float!
     description: String
-  }
-
-  type CartItem {
-    productId: ID!
-    quantity: Int!
   }
 
   input CreateUserInput{
