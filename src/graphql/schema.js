@@ -41,7 +41,6 @@ const typeDefs = gql`
     username: String!
     email:String!
     password: String!
-    cart: [CartItem]
   }
 `;
 
