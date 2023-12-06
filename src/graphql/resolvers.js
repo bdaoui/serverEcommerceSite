@@ -39,18 +39,26 @@ const resolvers = {
     },
     
     createUser: async (parent, args) => {
-      const argsToHash = args;
+      const {username, email, password} = args.input;
       
-      await bcrypt.hash(args.input.password, saltRounds, (err, hash) =>{
-        if(err){
-          console.error('Error hashing password: ', err);
-        } else{
-          argsToHash.input.password = hash;
-        }
+      const hashedPassword = await new Promise( (resolve, reject) =>{
+        bcrypt.hash(password, saltRounds, (err, hash) =>{
+          if(err){
+            console.error('Error hashing password: ', err);
+            reject(err);
+          } else{
+            argsToHash.input.password = hash;
+            resolve(hash);
+          }
+        });
       });
 
       try{
-        const newUser = new User(args.input);
+        const newUser = new User({
+          username,
+          email,
+          password: hashedPassword,
+        });
         const savedUser = await newUser.save();
         return savedUser;
 
