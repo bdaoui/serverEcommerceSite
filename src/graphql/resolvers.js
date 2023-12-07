@@ -99,8 +99,15 @@ const resolvers = {
           throw new Error('Invalid Password');
         }
 
-        const token = jwt.sign({userId: user.id}, SECRET_KEY, {expiresIn:'1h'} )
-        return token;        
+        const token = jwt.sign({userId: user.id}, process.env.SECRET_KEY, {expiresIn:'1h'} )
+        return {
+          token,
+          user: {
+            id: user.id,
+            username: user.username,
+            email: user.email,
+          }
+        };        
 
 
       } catch(error){
