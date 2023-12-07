@@ -42,6 +42,7 @@ const resolvers = {
     
     // Create New User, Wait for Hash Password
     createUser: async (parent, args) => {
+      console.log('Creation of New User...')
       const {username, email, password} = args.input;
       
       const hashedPassword = await new Promise( (resolve, reject) =>{
@@ -50,7 +51,7 @@ const resolvers = {
             console.error('Error hashing password: ', err);
             reject(err);
           } else{
-            argsToHash.input.password = hash;
+            args.input.password = hash;
             resolve(hash);
           }
         });
