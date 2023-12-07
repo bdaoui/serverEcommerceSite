@@ -26,10 +26,11 @@ const resolvers = {
     },
   },
   Mutation: {
-    // Define your mutations here
+    
+    // Create New Product
     createProduct: async (parent, args) => {
       try {
-        const newProduct = new Product(args);
+        const newProduct = new Product(args.input);
         const savedProduct = await newProduct.save();
         return savedProduct;
       } catch (error) {
@@ -38,6 +39,7 @@ const resolvers = {
       }
     },
     
+    // Create New User, Wait for Hash Password
     createUser: async (parent, args) => {
       const {username, email, password} = args.input;
       
