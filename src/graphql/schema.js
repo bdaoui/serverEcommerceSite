@@ -11,7 +11,7 @@ const typeDefs = gql`
   type Mutation {
     createUser(input: CreateUserInput): User
     createProduct(input: CreateProductInput): Product  # New mutation to create a product
-    logIn(input: LogInInput)
+    logIn(input: LogInInput) : AuthPayload
     #addToCart(Product)
     #deleteFromCart()
     #editFromCart()
@@ -37,6 +37,11 @@ const typeDefs = gql`
     price: Float!
     description: String
     image: String
+  }
+
+  type AuthPayload{
+    token: String!
+    user: User!
   }
 
   input CreateUserInput{
