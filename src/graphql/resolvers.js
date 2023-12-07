@@ -2,6 +2,7 @@
 const { typeDefs } = require('./schema'); 
 const Product = require('../models/product'); // Adjust the path accordingly
 const User = require('../models/user.js');
+const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
@@ -68,7 +69,37 @@ const resolvers = {
         console.error('Error creating New User: ', error);
         throw new Error('Failed to create New User')
       }
-    }
+    },
+
+    // Log In User
+
+    logIn : async (parent, args) => {
+      const {username, password} = args.input;
+
+      
+
+      try{
+        const user = await User.findOne({username});
+        if (!user){
+          console.error('User not Found');
+          throw new Error('Invalid Username');
+        }
+        const passwordCheck = await bcrypt.compare(password, user.password);
+         
+        if(!passwordCheck){
+          console.error('Password Does Not Match')
+          throw new Error('Invalid Password');
+        }
+
+        const token = jwt.sign({userId: user.id}, SECRET_KEY, {expiresIn:'1h'} )
+        return token;        
+
+
+      } catch(error){
+        console.error('Error in Connecting: ', error)
+        throw new Error('Failed to Connect')
+      }
+    },
   
   },
 };
