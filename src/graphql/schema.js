@@ -35,12 +35,20 @@ const typeDefs = gql`
     name: String!
     price: Float!
     description: String
+    image: String
   }
 
   input CreateUserInput{
     username: String!
     email:String!
     password: String!
+  }
+  
+  input CreateProductInput{
+    name: String!
+    price: String!
+    description: String
+    image: String
   }
 `;
 
