@@ -76,7 +76,15 @@ const resolvers = {
     logIn : async (parent, args) => {
       const {username, password} = args.input;
 
+      if(!username){
+        console.log("Username Required");
+        throw new Error("Username Required")
+      }
       
+      if(!password){
+        console.log("Password Required");
+        throw new Error("Password Required");
+      }
 
       try{
         const user = await User.findOne({username});
