@@ -11,6 +11,7 @@ const typeDefs = gql`
   type Mutation {
     createUser(input: CreateUserInput): User
     createProduct(input: CreateProductInput): Product  # New mutation to create a product
+    login(input: LogIn)
     #addToCart(Product)
     #deleteFromCart()
     #editFromCart()
