@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
+
 // resolvers.js
 const resolvers = {
   Query: {
@@ -15,6 +16,26 @@ const resolvers = {
       }
       return 'Not authenticated';
     },
+
+    product: (_, args ) =>{
+
+        try {
+          if(args.id!){
+            console.error("Id Needed")
+            throw new Error("No ID provided")
+            return 
+          }
+
+          const product = await Product.findById(args.id);
+          return product;
+
+        }
+        catch(error){
+          console.error("Error fetching Product: ", error);
+          throw new Error ("Failed Retreiving Product");
+        }
+    },
+
     // New resolver for getting a list of products
     products: async () => {
       try {
@@ -76,6 +97,9 @@ const resolvers = {
 
     logIn : async (parent, args) => {
       const {username, password} = args.input;
+
+      console.log('Trying to Log In ...')
+      console.log(`username: ${username}, password ${password}`)
 
       if(!username){
         console.log("Username Required");
