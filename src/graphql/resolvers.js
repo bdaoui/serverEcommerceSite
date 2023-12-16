@@ -17,10 +17,9 @@ const resolvers = {
       return 'Not authenticated';
     },
 
-    product: (_, args ) =>{
-
+    product: async (_, args ) =>{
         try {
-          if(args.id!){
+          if(!args.id){
             console.error("Id Needed")
             throw new Error("No ID provided")
             return 
